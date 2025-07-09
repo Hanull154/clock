@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stylish Iran Clock</title>
+<!-- Google Fonts for a modern look -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #fff;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.5s, color 0.5s;
+  }
+
+  /* Header styles */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: linear-gradient(90deg, #1f1f1f, #333);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border-bottom: 2px solid #555; /* added border at bottom of header */
+  }
+
+  /* Navigation menu */
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav ul li {
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 8px 12px;
+    transition: color 0.3s, transform 0.3s, background-color 0.3s;
+    border-radius: 8px; /* rounded border for menu items */
+  }
+
+  nav ul li:hover {
+    color: #00ffff;
+    transform: scale(1.1);
+    background-color: rgba(0,255,255,0.1); /* subtle background on hover */
+  }
+
+  /* Login icon styling */
+  .login {
+    font-size: 1.8em;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.3s, box-shadow 0.2s;
+    padding: 8px;
+    border-radius: 50%;
+  }
+
+  .login:hover {
+    color: #00ffff;
+    transform: rotate(15deg);
+    box-shadow: 0 4px 12px rgba(0,255,255,0.5);
+  }
+
+  /* Main clock display area */
+  .clock-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    border-top: 3px solid #555; /* separator line */
+    border-bottom: 3px solid #555;
+    background: var(--bg-color, #fff);
+    transition: background-color 0.5s;
+  }
+
+  /* Big animated clock styles */
+  .clock {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12vw;
+    letter-spacing: 3px;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border: 2px solid #666; /* added border around clock */
+    transition: all 0.5s ease;
+    cursor: default;
+  }
+
+  /* Stylish background toggle button */
+  .bg-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #222;
+    border: 2px solid #555; /* border around button */
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #fff;
+    font-size: 0.95em;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  }
+  .bg-toggle:hover {
+    background: #00ffff;
+    color: #000;
+    transform: scale(1.05);
+  }
+
+  /* Footer styling */
+  footer {
+    background: linear-gradient(90deg, #222, #555);
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.9em;
+    border-top: 3px solid #444; /* separator on top of footer */
+  }
+
+  /* Footer layout for larger screens */
+  @media(min-width: 600px) {
+    footer {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  /* Footer links container */
+  .footer-links {
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+  }
+
+  /* Footer links styling */
+  .footer-links a {
+    color: #eee;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.2s;
+    padding: 6px 8px;
+    border-radius: 6px;
+  }
+
+  .footer-links a:hover {
+    color: #00ffff;
+    transform: scale(1.1);
+    background-color: rgba(255,255,255,0.1); /* subtle background hover effect */
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+
+</header>
+
+<!-- Clock section -->
+<div class="clock-container" id="clockContainer">
+  <div class="clock" id="bigClock">Loading...</div>
+</div>
+
+<!-- Toggle background -->
+<button class="bg-toggle" id="backgroundBtn">Switch to Black</button>
+
+<!-- Footer with details -->
+<footer>
+  <div>
+    &copy; Designed by Hanul_am
+    <br/>
+
+  </div>
+  <div class="footer-links">
+    <a href="#" title="Contact Us">Contact</a>
+    <a href="#" title="Follow us on Twitter">Twitter</a>
+    <a href="#" title="Follow us on Facebook">Facebook</a>
+    <a href="#" title="Privacy Policy">Privacy</a>
+  </div>
+</footer>
+
+<script>
+  // Update the clock with fancy styling
+  function updateIranClock() {
+    const options = {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+      timeZone: 'Asia/Tehran'
+    };
+    const now = new Intl.DateTimeFormat('en-IR', options).format(new Date());
+    document.getElementById('bigClock').textContent = now;
+  }
+
+  setInterval(updateIranClock, 1000);
+  updateIranClock();
+
+  // Background toggle
+  const btn = document.getElementById('backgroundBtn');
+  const container = document.getElementById('clockContainer');
+  let isWhiteBg = true;
+
+  btn.onclick = () => {
+    if (isWhiteBg) {
+      document.body.style.backgroundColor = '#000';
+      container.style.backgroundColor = 'rgba(255,255,255,0.2)';
+      btn.textContent = 'Switch to White';
+    } else {
+      document.body.style.backgroundColor = '#fff';
+      container.style.backgroundColor = 'rgba(0,0,0,0.1)';
+      btn.textContent = 'Switch to Black';
+    }
+    isWhiteBg = !isWhiteBg;
+  };
+</script>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #fff;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.5s, color 0.5s;
+  }
+
+  /* Header styles */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: linear-gradient(90deg, #1f1f1f, #333);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border-bottom: 2px solid #555;
+  }
+
+  /* Navigation menu */
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav ul li {
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 8px 12px;
+    transition: color 0.3s, transform 0.3s, background-color 0.3s;
+    border-radius: 8px;
+  }
+
+  nav ul li:hover {
+    color: #00ffff;
+    transform: scale(1.1);
+    background-color: rgba(0,255,255,0.1);
+  }
+
+  /* Login icon styling */
+  .login {
+    font-size: 1.8em;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.3s, box-shadow 0.2s;
+    padding: 8px;
+    border-radius: 50%;
+  }
+
+  .login:hover {
+    color: #00ffff;
+    transform: rotate(15deg);
+    box-shadow: 0 4px 12px rgba(0,255,255,0.5);
+  }
+
+  /* Main clock display area */
+  .clock-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    border-top: 3px solid #555;
+    border-bottom: 3px solid #555;
+    background: var(--bg-color, #fff);
+    transition: background-color 0.5s;
+  }
+
+  /* Big animated clock styles */
+  .clock {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12vw;
+    letter-spacing: 3px;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border: 2px solid #666;
+    transition: all 0.5s ease;
+    cursor: default;
+  }
+
+  /* Stylish background toggle button */
+  .bg-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #222;
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #fff;
+    font-size: 0.95em;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  }
+  .bg-toggle:hover {
+    background: #00ffff;
+    color: #000;
+    transform: scale(1.05);
+  }
+
+  /* Footer styling */
+  footer {
+    background: linear-gradient(90deg, #222, #555);
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.9em;
+    border-top: 3px solid #444;
+  }
+
+  /* Footer layout for larger screens */
+  @media(min-width: 600px) {
+    footer {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  /* Footer links container */
+  .footer-links {
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+  }
+
+  /* Footer links styling */
+  .footer-links a {
+    color: #eee;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.2s;
+    padding: 6px 8px;
+    border-radius: 6px;
+  }
+
+  .footer-links a:hover {
+    color: #00ffff;
+    transform: scale(1.1);
+    background-color: rgba(255,255,255,0.1);
+  }
+
+  /* Responsive adjustments */
+  @media(max-width: 600px) {
+    /* Reduce header paddings and font sizes */
+    header {
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    nav ul {
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    /* Stack nav items */
+    nav ul li {
+      font-size: 1em;
+      padding: 6px 10px;
+    }
+
+    /* Font size for clock */
+    .clock {
+      font-size: 8vw; /* smaller size for small screens */
+      padding: 20px;
+    }
+
+    /* Adjust clock container padding */
+    .clock-container {
+      padding: 10px;
+    }
+
+    /* Resize buttons if needed */
+    .bg-toggle {
+      padding: 10px 16px;
+      font-size: 0.8em;
+    }
+
+    /* Footer adjustments */
+    footer {
+      padding: 15px 20px;
+      font-size: 0.8em;
+    }
+
+    /* Flex layout change for footer links if needed */
+    .footer-links {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+  }
+</style>
+</body>
+</html>
